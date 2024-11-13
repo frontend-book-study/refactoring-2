@@ -11,18 +11,24 @@ export class Order {
 
   calculateTotal() {
     this.#validateStock();
-    const total = this.items.reduce(
-      (total, item) => (total += item.item.calculateBasePrice(item.quantity)),
-      0
-    );
 
+    const total = this.#calculateBaseTotalPrice();
     const shippingCost = this.calculateShippingCost(total);
+
     return this.customer.discount(total) + shippingCost;
   }
 
   calculateShippingCost(total) {
     if (total > 50000) return 0;
     return 5000;
+  }
+
+  #calculateBaseTotalPrice() {
+    return this.items.reduce(
+      (total, { item, quantity }) =>
+        (total += item.calculateBasePrice(quantity)),
+      0
+    );
   }
 
   #validateStock() {
