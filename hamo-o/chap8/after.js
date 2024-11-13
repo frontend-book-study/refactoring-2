@@ -3,8 +3,6 @@ export class Order {
   constructor(customer) {
     this.customer = customer;
     this.items = [];
-    // 필드 옮기기 대상: discountRate는 Customer 클래스로 이동 가능
-    this.discountRate = 0;
   }
 
   addItem(item, quantity) {
@@ -27,16 +25,10 @@ export class Order {
       0
     );
 
-    if (this.customer.isPremium) {
-      this.discountRate = 0.1;
-    } else {
-      this.discountRate = 0.05;
-    }
-
     const shippingCost = this.calculateShippingCost(total);
 
     // 문장을 호출한 곳으로 옮기기 대상: 할인 적용 로직을 호출하는 쪽으로 이동 가능
-    total = total * (1 - this.discountRate);
+    total = total * (1 - this.customer.calculateDiscountRate());
 
     return total + shippingCost;
   }
@@ -51,6 +43,12 @@ export class Customer {
   constructor(name, isPremium) {
     this.name = name;
     this.isPremium = isPremium;
+    this.discountRate = this.calculateDiscountRate();
+  }
+
+  calculateDiscountRate() {
+    if (this.isPremium) return 0.1;
+    return 0.05;
   }
 }
 
@@ -61,7 +59,6 @@ export class OrderItem {
     this.stock = stock;
   }
 
-  // 함수 옮기기 대상: calculateBasePrice는 OrderItem 클래스로 이동 가능
   calculateBasePrice(quantity) {
     return quantity * this.price;
   }

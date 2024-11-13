@@ -5,6 +5,7 @@ describe("Customer 클래스 테스트", () => {
     const customer = new Customer("Jane Doe", true);
     expect(customer.name).toBe("Jane Doe");
     expect(customer.isPremium).toBe(true);
+    expect(customer.discountRate).toBe(0.1);
   });
 
   test("Customer 생성자: 기본 설정이 정확한지 확인", () => {

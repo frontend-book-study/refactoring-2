@@ -16,7 +16,6 @@ describe("Order 클래스 테스트", () => {
   test("Order 생성자: 초기 값 설정", () => {
     expect(order.customer).toBe(customer);
     expect(order.items).toEqual([]);
-    expect(order.discountRate).toBe(0);
   });
 
   test("addItem: 아이템을 추가하면 items 배열에 저장되는지 확인", () => {
@@ -36,6 +35,7 @@ describe("Order 클래스 테스트", () => {
 
   test("calculateTotal: 총 금액 계산 (프리미엄 고객)", () => {
     customer.isPremium = true;
+    customer.calculateDiscountRate();
     order.addItem(item1, 1); // 1000 * 1 = 1000
     order.addItem(item2, 1); // 500 * 1 = 500, 총 1500
 
