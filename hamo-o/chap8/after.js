@@ -16,8 +16,6 @@ export class Order {
 
   // 문장을 함수로 옮기기 대상: 배송비 계산 로직을 별도 함수로 분리 가능
   calculateTotal() {
-    let total = 0;
-
     this.items.forEach((item) => {
       // 인라인 코드를 함수 호출로 바꾸기 대상: 재고 확인 로직을 함수로 추출 가능
       if (item.item.stock < item.quantity) {
@@ -25,9 +23,10 @@ export class Order {
       }
     });
 
-    this.items.forEach((item) => {
-      total += item.item.calculateBasePrice(item.quantity);
-    });
+    let total = this.items.reduce(
+      (total, item) => (total += item.item.calculateBasePrice(item.quantity)),
+      0
+    );
 
     // 문장 슬라이드하기 대상: 할인율 계산 로직을 관련 코드 근처로 이동 가능
     let shippingCost = 0;
