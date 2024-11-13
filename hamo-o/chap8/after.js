@@ -14,7 +14,6 @@ export class Order {
     });
   }
 
-  // 문장을 함수로 옮기기 대상: 배송비 계산 로직을 별도 함수로 분리 가능
   calculateTotal() {
     this.items.forEach((item) => {
       // 인라인 코드를 함수 호출로 바꾸기 대상: 재고 확인 로직을 함수로 추출 가능
@@ -34,17 +33,17 @@ export class Order {
       this.discountRate = 0.05;
     }
 
-    let shippingCost = 0;
-    if (total > 50000) {
-      shippingCost = 0;
-    } else {
-      shippingCost = 5000;
-    }
+    const shippingCost = this.calculateShippingCost(total);
 
     // 문장을 호출한 곳으로 옮기기 대상: 할인 적용 로직을 호출하는 쪽으로 이동 가능
     total = total * (1 - this.discountRate);
 
     return total + shippingCost;
+  }
+
+  calculateShippingCost(total) {
+    if (total > 50000) return 0;
+    return 5000;
   }
 }
 
