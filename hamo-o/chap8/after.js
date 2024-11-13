@@ -28,18 +28,17 @@ export class Order {
       0
     );
 
-    // 문장 슬라이드하기 대상: 할인율 계산 로직을 관련 코드 근처로 이동 가능
+    if (this.customer.isPremium) {
+      this.discountRate = 0.1;
+    } else {
+      this.discountRate = 0.05;
+    }
+
     let shippingCost = 0;
     if (total > 50000) {
       shippingCost = 0;
     } else {
       shippingCost = 5000;
-    }
-
-    if (this.customer.isPremium) {
-      this.discountRate = 0.1;
-    } else {
-      this.discountRate = 0.05;
     }
 
     // 문장을 호출한 곳으로 옮기기 대상: 할인 적용 로직을 호출하는 쪽으로 이동 가능
