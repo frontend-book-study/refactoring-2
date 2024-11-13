@@ -13,12 +13,12 @@ export class Order {
     this.#validateStock();
 
     const total = this.#calculateBaseTotalPrice();
-    const shippingCost = this.calculateShippingCost(total);
+    const shippingCost = this.#calculateShippingCost(total);
 
     return this.customer.discount(total) + shippingCost;
   }
 
-  calculateShippingCost(total) {
+  #calculateShippingCost(total) {
     if (total > 50000) return 0;
     return 5000;
   }
@@ -44,16 +44,16 @@ export class Customer {
   constructor(name, isPremium) {
     this.name = name;
     this.isPremium = isPremium;
-    this.discountRate = this.calculateDiscountRate();
+    this.discountRate = this.#calculateDiscountRate();
   }
 
-  calculateDiscountRate() {
+  #calculateDiscountRate() {
     if (this.isPremium) return 0.1;
     return 0.05;
   }
 
   discount(price) {
-    return price * (1 - this.calculateDiscountRate());
+    return price * (1 - this.discountRate);
   }
 }
 
