@@ -11,17 +11,13 @@ export class Order {
 
   calculateTotal() {
     this.#validateStock();
-    let total = this.items.reduce(
+    const total = this.items.reduce(
       (total, item) => (total += item.item.calculateBasePrice(item.quantity)),
       0
     );
 
     const shippingCost = this.calculateShippingCost(total);
-
-    // 문장을 호출한 곳으로 옮기기 대상: 할인 적용 로직을 호출하는 쪽으로 이동 가능
-    total = total * (1 - this.customer.calculateDiscountRate());
-
-    return total + shippingCost;
+    return this.customer.discount(total) + shippingCost;
   }
 
   calculateShippingCost(total) {
@@ -48,6 +44,10 @@ export class Customer {
   calculateDiscountRate() {
     if (this.isPremium) return 0.1;
     return 0.05;
+  }
+
+  discount(price) {
+    return price * (1 - this.calculateDiscountRate());
   }
 }
 
