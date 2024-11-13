@@ -1,5 +1,5 @@
 // 주문 처리 시스템 예제
-class Order {
+export class Order {
   constructor(customer) {
     this.customer = customer;
     this.items = [];
@@ -53,14 +53,14 @@ class Order {
   }
 }
 
-class Customer {
+export class Customer {
   constructor(name, isPremium) {
     this.name = name;
     this.isPremium = isPremium;
   }
 }
 
-class OrderItem {
+export class OrderItem {
   constructor(name, price, stock) {
     this.name = name;
     this.price = price;
