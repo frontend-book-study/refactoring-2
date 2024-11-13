@@ -1,4 +1,3 @@
-// 주문 처리 시스템 예제
 export class Order {
   constructor(customer) {
     this.customer = customer;
