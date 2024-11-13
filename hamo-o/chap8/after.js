@@ -13,13 +13,7 @@ export class Order {
   }
 
   calculateTotal() {
-    this.items.forEach((item) => {
-      // 인라인 코드를 함수 호출로 바꾸기 대상: 재고 확인 로직을 함수로 추출 가능
-      if (item.item.stock < item.quantity) {
-        throw new Error("재고가 부족합니다.");
-      }
-    });
-
+    this.#validateStock();
     let total = this.items.reduce(
       (total, item) => (total += item.item.calculateBasePrice(item.quantity)),
       0
@@ -36,6 +30,14 @@ export class Order {
   calculateShippingCost(total) {
     if (total > 50000) return 0;
     return 5000;
+  }
+
+  #validateStock() {
+    this.items.forEach((item) => {
+      if (item.item.stock < item.quantity) {
+        throw new Error("재고가 부족합니다.");
+      }
+    });
   }
 }
 
