@@ -6,10 +6,7 @@ export class Order {
   }
 
   addItem(item, quantity) {
-    this.items.push({
-      item: item,
-      quantity: quantity,
-    });
+    this.items.push({ item, quantity });
   }
 
   calculateTotal() {
