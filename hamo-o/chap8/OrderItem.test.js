@@ -14,4 +14,10 @@ describe("OrderItem 클래스 테스트", () => {
     expect(item.price).toBe(150);
     expect(item.stock).toBe(0);
   });
+
+  test("calculateBasePrice: 가격 계산이 올바르게 수행되는지 확인", () => {
+    const item = new OrderItem("Laptop", 1000, 1);
+    const basePrice = item.calculateBasePrice(3);
+    expect(basePrice).toBe(3000);
+  });
 });

@@ -7,11 +7,6 @@ export class Order {
     this.discountRate = 0;
   }
 
-  // 함수 옮기기 대상: calculateBasePrice는 OrderItem 클래스로 이동 가능
-  calculateBasePrice(quantity, itemPrice) {
-    return quantity * itemPrice;
-  }
-
   addItem(item, quantity) {
     this.items.push({
       item: item,
@@ -29,7 +24,7 @@ export class Order {
       if (item.item.stock < item.quantity) {
         throw new Error("재고가 부족합니다.");
       }
-      total += this.calculateBasePrice(item.quantity, item.item.price);
+      total += item.item.calculateBasePrice(item.quantity);
     });
 
     // 문장 슬라이드하기 대상: 할인율 계산 로직을 관련 코드 근처로 이동 가능
@@ -65,5 +60,10 @@ export class OrderItem {
     this.name = name;
     this.price = price;
     this.stock = stock;
+  }
+
+  // 함수 옮기기 대상: calculateBasePrice는 OrderItem 클래스로 이동 가능
+  calculateBasePrice(quantity) {
+    return quantity * this.price;
   }
 }

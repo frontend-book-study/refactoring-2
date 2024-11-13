@@ -19,11 +19,6 @@ describe("Order 클래스 테스트", () => {
     expect(order.discountRate).toBe(0);
   });
 
-  test("calculateBasePrice: 가격 계산이 올바르게 수행되는지 확인", () => {
-    const basePrice = order.calculateBasePrice(3, 1000);
-    expect(basePrice).toBe(3000);
-  });
-
   test("addItem: 아이템을 추가하면 items 배열에 저장되는지 확인", () => {
     order.addItem(item1, 2);
     expect(order.items.length).toBe(1);
