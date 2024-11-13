@@ -24,13 +24,13 @@ export class Order {
     let total = 0;
 
     // 반복문 쪼개기 대상: 상품 가격 계산과 재고 확인을 별도의 반복문으로 분리 가능
-    for (const item of this.items) {
+    this.items.forEach((item) => {
       // 인라인 코드를 함수 호출로 바꾸기 대상: 재고 확인 로직을 함수로 추출 가능
       if (item.item.stock < item.quantity) {
         throw new Error("재고가 부족합니다.");
       }
       total += this.calculateBasePrice(item.quantity, item.item.price);
-    }
+    });
 
     // 문장 슬라이드하기 대상: 할인율 계산 로직을 관련 코드 근처로 이동 가능
     let shippingCost = 0;
